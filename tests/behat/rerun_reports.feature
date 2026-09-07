@@ -47,7 +47,7 @@ Feature: Re-run AI Analysis Reports
     And I remember AI analysis report "Report to Delete"
     And AI analysis report "Report to Delete" should have "1" queued tasks
     When I click on "Delete" "link" in the "Report to Delete" "table_row"
-    And I press "Continue"
+    And I press "Delete"
     Then I should see "Report deleted successfully"
     And I should not see "Report to Delete"
     And AI analysis report "Report to Delete" should have "0" queued tasks

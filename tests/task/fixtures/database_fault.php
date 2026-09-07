@@ -53,12 +53,15 @@ final class database_fault {
      */
     public function __construct(
         moodle_database $database,
-        moodle_database&MockObject $double,
+        MockObject $double,
         int $reportid,
         string $operation
     ) {
         if (!PHPUNIT_TEST) {
             throw new \coding_exception('This database fixture is for PHPUnit only');
+        }
+        if (!($double instanceof moodle_database)) {
+            throw new \coding_exception('Expected a moodle_database-compatible PHPUnit double');
         }
         foreach ((new ReflectionClass(moodle_database::class))->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             if ($method->isStatic() || $method->isFinal() || $method->isConstructor() || $method->isDestructor()) {

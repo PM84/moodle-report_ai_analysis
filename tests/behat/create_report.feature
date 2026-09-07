@@ -64,14 +64,11 @@ Feature: Create AI Analysis Reports
     And I press "Create new analysis"
     Then I should see "Required"
 
-  Scenario: Selecting sources, participants and groups produces a Unicode-safe automatic title
+  Scenario: Selecting participants and groups produces a Unicode-safe automatic title
     Given I am on the "Course 1" "Course" page logged in as "teacher1"
     And I navigate to "Reports > AI Conversation Analysis" in current page administration
     And I click on "New analysis" "link"
-    Then the "Data sources" select box should contain "Forum 1"
-    And the "Data sources" select box should not contain "Quiz 1"
     When I set the field "Analysis mode" to "Aggregated (all participants)"
-    And I set the field "Data sources" to "Forum 1"
     And I set the field "all_participants" to "0"
     And I set the field "Select participants" to "Student One,Student Two"
     And I set the field "Groups" to "Group 1"

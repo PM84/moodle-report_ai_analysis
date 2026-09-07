@@ -615,7 +615,7 @@ class process_analysis_task extends adhoc_task {
      * @param array $userdata Actual authors' isolated source strings
      * @param int $budget Remaining characters after the instruction prefix
      * @param bool $individual Whether each author has their own request budget
-     * @param bool &$truncated Updated truncation flag
+     * @param bool $truncated Updated truncation flag
      * @return array Source strings included in requests
      */
     private function prepare_sources(array $userdata, int $budget, bool $individual, bool &$truncated): array {
