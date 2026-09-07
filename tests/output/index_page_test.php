@@ -48,6 +48,7 @@ final class index_page_test extends \advanced_testcase {
         // A fresh page lets a single scenario test render more than one listing.
         $PAGE = new \moodle_page();
         $this->resetAfterTest();
+        set_config('sendcoursewelcomemessage', 0, 'enrol_manual');
         $this->course = $this->getDataGenerator()->create_course();
         $this->owner = $this->getDataGenerator()->create_user();
         $this->other = $this->getDataGenerator()->create_user();

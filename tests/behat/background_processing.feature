@@ -25,8 +25,8 @@ Feature: Real queued analysis processing with a local request fixture
       | forum1 | First thread | Alpha subject | student1 | ALPHA_ONLY          |
       | forum2 | Other thread | Other subject | student2 | OTHER_FORUM_PRIVATE |
     And the following "mod_forum > posts" exist:
-      | discussion   | parentsubject | user     | subject      | message   |
-      | First thread | Alpha subject | student2 | Beta subject | BETA_ONLY |
+      | discussion   | user     | message   |
+      | First thread | student2 | BETA_ONLY |
     And the AI analysis backend is configured
     And the following config values are set as admin:
       | store_raw_data           | 1    | report_ai_analysis |

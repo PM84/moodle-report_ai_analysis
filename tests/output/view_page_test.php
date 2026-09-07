@@ -50,6 +50,7 @@ final class view_page_test extends \advanced_testcase {
         // A fresh page lets a single scenario test render more than one report.
         $PAGE = new \moodle_page();
         $this->resetAfterTest();
+        set_config('sendcoursewelcomemessage', 0, 'enrol_manual');
         $this->course = $this->getDataGenerator()->create_course(['fullname' => 'Kurs Ä & B']);
         $this->context = \context_course::instance($this->course->id);
         $this->owner = $this->getDataGenerator()->create_user();

@@ -612,11 +612,11 @@ class process_analysis_task extends adhoc_task {
      * This is a text boundary, not a promise to retain complete posts or conversation pairs. Subject
      * copies are therefore prefixes of what was actually sent, never an uncut alternative payload.
      *
-     * @param array<int, string> $userdata Actual authors' isolated source strings
+     * @param array $userdata Actual authors' isolated source strings
      * @param int $budget Remaining characters after the instruction prefix
      * @param bool $individual Whether each author has their own request budget
-     * @param bool $truncated Updated truncation flag
-     * @return array<int, string> Source strings included in requests
+     * @param bool &$truncated Updated truncation flag
+     * @return array Source strings included in requests
      */
     private function prepare_sources(array $userdata, int $budget, bool $individual, bool &$truncated): array {
         $userdata = array_filter($userdata, static fn(string $text): bool => trim($text) !== '');
@@ -662,7 +662,7 @@ class process_analysis_task extends adhoc_task {
      * not another full copy per user. Raw-copy shortening does not imply an incomplete AI request.
      *
      * @param stdClass $run Expected generation
-     * @param array<int, string> $sources Included author strings
+     * @param array $sources Included author strings
      * @param bool $truncated Whether collection or request formatting was shortened
      */
     private function store_sources(stdClass $run, array $sources, bool $truncated): void {

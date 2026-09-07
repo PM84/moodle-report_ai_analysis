@@ -47,7 +47,7 @@ final class database_fault {
      * Configure an abstract-DML PHPUnit double delegating all normal public operations.
      *
      * @param moodle_database $database Actual configured test database
-     * @param moodle_database&MockObject $double PHPUnit mock of the abstract DML contract
+     * @param MockObject $double PHPUnit mock of the abstract DML contract
      * @param int $reportid Report whose completion can fail
      * @param string $operation One of complete, disposed, queue, delete, or observe
      */

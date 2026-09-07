@@ -86,7 +86,7 @@ final class ai_request_provider_test extends \advanced_testcase {
         $instance = $factory->get_new_instance('chatgpt');
         $instance->set_name('Availability fixture');
         $instance->set_tenant(tenant::DEFAULT_IDENTIFIER);
-        $instance->set_model('gpt-4o');
+        $instance->set_model(0);
         $instance->set_endpoint('https://availability-fixture.invalid/v1/chat/completions');
         $instance->set_apikey('synthetic-test-placeholder');
         $instance->set_useglobalapikey(false);

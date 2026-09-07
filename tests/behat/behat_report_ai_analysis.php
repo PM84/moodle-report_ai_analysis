@@ -102,7 +102,7 @@ class behat_report_ai_analysis extends behat_base {
             $instance = $factory->get_new_instance('chatgpt');
             $instance->set_name('AI analysis Behat fixture');
             $instance->set_tenant($identifier);
-            $instance->set_model('gpt-4o');
+            $instance->set_model(0);
             $instance->set_endpoint('https://ai-analysis-behat.invalid/v1/chat/completions');
             $instance->set_apikey('behat-placeholder-not-a-secret');
             $instance->set_useglobalapikey(false);
