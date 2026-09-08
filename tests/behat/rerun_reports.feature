@@ -46,6 +46,7 @@ Feature: Re-run AI Analysis Reports
     And an adhoc task "report_ai_analysis\task\process_analysis_task" should exist for user "teacher1"
     And I remember AI analysis report "Report to Delete"
     And AI analysis report "Report to Delete" should have "1" queued tasks
+    And I navigate to "Reports > AI Conversation Analysis" in current page administration
     When I click on "Delete" "link" in the "Report to Delete" "table_row"
     And I press "Continue"
     Then I should see "Report deleted successfully"

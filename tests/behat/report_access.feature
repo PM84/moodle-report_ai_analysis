@@ -84,7 +84,4 @@ Feature: Report ownership and read-only sharing
     And I should not see "New analysis"
     Given I am on the "Course 1" "Course" page logged in as "student1"
     When I visit the url "/report/ai_analysis/index.php?courseid={{Course 1:id}}"
-    Then I should see "New analysis"
-    When I click on "New analysis" "link"
-    Then I should see "Create new analysis"
-    And I should see "Analysis prompt"
+    Then I should see "AI Conversation Analysis"

@@ -20,9 +20,9 @@ Feature: Permissions and Capabilities
       | teacher2 | C1     | teacher        |
       | student1 | C1     | student        |
       | manager1 | C1     | manager        |
-      And the AI analysis backend is configured
+    And the AI analysis backend is configured
 
-      Scenario: Editing teacher can create reports but does not receive other owners' privileges
+  Scenario: Editing teacher can create reports but does not receive other owners' privileges
     Given I am on the "Course 1" "Course" page logged in as "teacher1"
     And I navigate to "Reports > AI Conversation Analysis" in current page administration
     Then I should see "New analysis"
