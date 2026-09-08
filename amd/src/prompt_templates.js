@@ -26,15 +26,16 @@
  * Initialize prompt templates for dropdown variant.
  */
 export const init = () => {
-    const selector = document.getElementById('id_template_selector');
-    const promptField = document.getElementById('id_prompt');
+    var selector = document.getElementById('id_template_selector');
+    var promptField = document.getElementById('id_prompt');
 
     if (!selector || !promptField) {
         return;
     }
 
-    selector.addEventListener('change', () => {
-        const prompt = selector.selectedOptions[0]?.dataset.prompt;
+    selector.addEventListener('change', function() {
+        var selected = selector.selectedOptions && selector.selectedOptions.length ? selector.selectedOptions[0] : null;
+        var prompt = selected && selected.dataset ? selected.dataset.prompt : undefined;
         if (prompt !== undefined && !promptField.disabled) {
             promptField.value = prompt;
             promptField.dispatchEvent(new Event('input', {bubbles: true}));
@@ -46,16 +47,16 @@ export const init = () => {
  * Initialize prompt templates for button variant.
  */
 export const initButtons = () => {
-    const promptField = document.getElementById('id_prompt');
+    var promptField = document.getElementById('id_prompt');
 
     if (!promptField) {
         return;
     }
 
-    document.querySelectorAll('.prompt-template-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+    document.querySelectorAll('.prompt-template-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
             e.preventDefault();
-            const prompt = btn.dataset.prompt;
+            var prompt = btn.dataset.prompt;
             if (prompt !== undefined && !promptField.disabled) {
                 promptField.value = prompt;
                 promptField.dispatchEvent(new Event('input', {bubbles: true}));
