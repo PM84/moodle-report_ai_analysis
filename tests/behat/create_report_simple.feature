@@ -14,6 +14,7 @@ Feature: Create AI Analysis Reports - Simple Tests
     And the following "course enrolments" exist:
       | user     | course | role           |
       | teacher1 | C1     | editingteacher |
+    And the AI analysis backend is configured
 
   Scenario: Teacher can open the create report form
     Given I am on the "Course 1" "Course" page logged in as "teacher1"

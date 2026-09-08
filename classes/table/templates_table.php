@@ -53,7 +53,7 @@ class templates_table extends table_sql {
 
         // Table settings.
         $this->collapsible(false);
-        $this->sortable(false);
+        $this->sortable(true, 'sortorder', SORT_ASC);
         $this->pageable(false);
 
         // Define SQL.

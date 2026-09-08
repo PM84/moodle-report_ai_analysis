@@ -15,35 +15,23 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Succeeding provider for testing exception handling.
+ * Hook registrations for analysis report cleanup and AI usage information.
  *
  * @package    report_ai_analysis
- * @copyright  2025 ISB Bayern
+ * @copyright  2026 ISB Bayern
  * @author     Dr. Peter Mayer
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-namespace report_ai_analysis\tests\fixtures;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once(__DIR__ . '/testable_provider.php');
-
-/**
- * Succeeding provider for testing exception handling.
- *
- * @package    report_ai_analysis
- * @copyright  2025 ISB Bayern
- * @author     Dr. Peter Mayer
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class succeeding_provider extends testable_provider {
-    /**
-     * Get provider type.
-     *
-     * @return string Provider type.
-     */
-    public static function get_type(): string {
-        return 'succeeding_provider';
-    }
-}
+$callbacks = [
+    [
+        'hook' => \core_course\hook\before_course_deleted::class,
+        'callback' => \report_ai_analysis\hook_callbacks::class . '::before_course_deleted',
+    ],
+    [
+        'hook' => \local_ai_manager\hook\purpose_usage::class,
+        'callback' => \report_ai_analysis\hook_callbacks::class . '::purpose_usage',
+    ],
+];

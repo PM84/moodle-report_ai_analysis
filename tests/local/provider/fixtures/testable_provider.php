@@ -14,78 +14,69 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Testable provider class for unit testing.
- *
- * @package    report_ai_analysis
- * @copyright  2025 ISB Bayern
- * @author     Dr. Peter Mayer
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+namespace report_ai_analysis\local\provider\fixtures;
 
-namespace report_ai_analysis\tests\fixtures;
-
-use report_ai_analysis\provider\base_provider;
+use report_ai_analysis\local\provider\base_provider;
 
 /**
- * Testable provider class for unit testing.
+ * Injectable provider fixture; discovery never enables this unsupported source in production.
  *
  * @package    report_ai_analysis
- * @copyright  2025 ISB Bayern
+ * @copyright  2026 ISB Bayern
  * @author     Dr. Peter Mayer
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class testable_provider extends base_provider {
     /**
-     * Get provider type.
+     * Get the fixture provider type.
      *
-     * @return string Provider type.
+     * @return string Fixture type.
      */
     public static function get_type(): string {
         return 'test_provider';
     }
 
     /**
-     * Check if available.
+     * Get availability for tests.
      *
-     * @return bool Always true.
+     * @return bool Always available.
      */
     public static function is_available(): bool {
         return true;
     }
 
     /**
-     * Get metadata.
+     * Get fixture metadata.
      *
      * @return array Metadata.
      */
     public static function get_metadata(): array {
-        return ['name' => 'Test Provider', 'type' => 'test_provider'];
+        return ['name' => 'Test provider', 'type' => static::get_type()];
     }
 
     /**
-     * Collect data.
+     * Collect no data unless mocked by a test.
      *
-     * @return array Data.
+     * @return array Empty data.
      */
     public function collect(): array {
         return [];
     }
 
     /**
-     * Format for AI.
+     * Format fixture content.
      *
-     * @param array $data Data to format.
-     * @return string Formatted data.
+     * @param array $data Fixture records.
+     * @return string Concatenated content.
      */
     public static function format_for_ai(array $data): string {
-        return 'Test formatted';
+        return implode("\n", array_column($data, 'content'));
     }
 
     /**
-     * Get statistics.
+     * Get fixture statistics.
      *
-     * @param array $data Data to analyze.
+     * @param array $data Fixture records.
      * @return array Statistics.
      */
     public static function get_statistics(array $data): array {
@@ -93,10 +84,10 @@ class testable_provider extends base_provider {
     }
 
     /**
-     * Check if this provider handles the given source.
+     * Accept a source for source-filter tests.
      *
      * @param string $sourceidentifier Source identifier.
-     * @return bool True if this provider handles this source.
+     * @return bool Whether the source is handled.
      */
     public function handles_source(string $sourceidentifier): bool {
         return true;

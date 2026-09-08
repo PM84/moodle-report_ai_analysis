@@ -34,8 +34,8 @@ use advanced_testcase;
  * @copyright  2025 ISB Bayern
  * @author     Dr. Peter Mayer
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- * @covers     \report_ai_analysis\scope_builder
  */
+#[\PHPUnit\Framework\Attributes\CoversClass(scope_builder::class)]
 final class report_timerange_test extends advanced_testcase {
     /**
      * Test timerange persistence in database records.

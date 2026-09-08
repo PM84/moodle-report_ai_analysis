@@ -14,36 +14,37 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-/**
- * Non-handling provider for testing source filtering.
- *
- * @package    report_ai_analysis
- * @copyright  2025 ISB Bayern
- * @author     Dr. Peter Mayer
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-namespace report_ai_analysis\tests\fixtures;
+namespace report_ai_analysis\local\provider\fixtures;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/testable_provider.php');
 
 /**
- * Non-handling provider for testing source filtering.
+ * Provider fixture for a source which was not selected.
  *
  * @package    report_ai_analysis
- * @copyright  2025 ISB Bayern
+ * @copyright  2026 ISB Bayern
  * @author     Dr. Peter Mayer
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class non_handling_provider extends testable_provider {
     /**
-     * Get provider type.
+     * Get the fixture type.
      *
-     * @return string Provider type.
+     * @return string Fixture type.
      */
     public static function get_type(): string {
         return 'non_handling_provider';
+    }
+
+    /**
+     * Decline all sources.
+     *
+     * @param string $sourceidentifier Source identifier.
+     * @return bool Always false.
+     */
+    public function handles_source(string $sourceidentifier): bool {
+        return false;
     }
 }

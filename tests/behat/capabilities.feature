@@ -20,15 +20,19 @@ Feature: Permissions and Capabilities
       | teacher2 | C1     | teacher        |
       | student1 | C1     | student        |
       | manager1 | C1     | manager        |
+    And the AI analysis backend is configured
 
-  Scenario: Editing teacher has all capabilities by default
+  Scenario: Editing teacher can create reports but does not receive other owners' privileges
     Given I am on the "Course 1" "Course" page logged in as "teacher1"
     And I navigate to "Reports > AI Conversation Analysis" in current page administration
     Then I should see "New analysis"
     And I should see "AI Conversation Analysis"
 
-  Scenario: Teacher (non-editing) has no access by default
-    Given I am on the "Course 1" "Course" page logged in as "teacher2"
+  Scenario: A prohibited view capability removes non-editing teacher navigation
+    Given the following "permission overrides" exist:
+      | capability              | permission | role    | contextlevel | reference |
+      | report/ai_analysis:view | Prohibit   | teacher | Course       | C1        |
+    And I am on the "Course 1" "Course" page logged in as "teacher2"
     When I navigate to "Reports" in current page administration
     Then I should not see "AI Conversation Analysis"
 
@@ -83,9 +87,17 @@ Feature: Permissions and Capabilities
     When I navigate to "Reports > AI Conversation Analysis" in current page administration
     Then I should not see "Re-run" in the "Test Report" "table_row"
 
-  # View page has session issues in Behat when testing capabilities
-  # Raw data capability enforcement tested via PHPUnit
-  # Scenario: Teacher without viewrawdata cannot see raw data
+  Scenario: Raw data needs its separate capability on the actual detail endpoint
+    Given the following "report_ai_analysis > reports" exist:
+      | title      | course | user     | status    | prompt                | raw_data                |
+      | Raw report | C1     | teacher1 | completed | Analyse permitted data | PRIVATE_RAW_DATA_MARKER |
+    And the following "permission overrides" exist:
+      | capability                     | permission | role           | contextlevel | reference |
+      | report/ai_analysis:viewrawdata | Prohibit   | editingteacher | Course       | C1        |
+    And I am on the "Course 1" "Course" page logged in as "teacher1"
+    When I view the AI analysis report "Raw report"
+    Then I should not see "PRIVATE_RAW_DATA_MARKER"
+    And I should not see "Raw Conversation Data"
 
   Scenario: Grant student create capability
     Given the following "permission overrides" exist:
