@@ -36,38 +36,34 @@ import {renderWarningBox} from 'local_ai_manager/warningbox';
  * @param {string} errorMessage Localized generic error, never a backend exception
  * @returns {Promise<void>}
  */
-export const initForm = function(selector, userId, errorMessage) {
-    var root = document.querySelector(selector);
+export const initForm = async(selector, userId, errorMessage) => {
+    const root = document.querySelector(selector);
     if (!root) {
-        return Promise.resolve();
+        return;
     }
-    var mode = document.getElementById('id_analysis_mode');
-    var warning = document.getElementById('individual_mode_warning');
+    const mode = document.getElementById('id_analysis_mode');
+    const warning = document.getElementById('individual_mode_warning');
     if (mode && warning) {
-        var updateWarning = function() {
+        const updateWarning = () => {
             warning.hidden = mode.value !== 'individual';
         };
         mode.addEventListener('change', updateWarning);
         updateWarning();
     }
 
-    var pending = new Pending('report_ai_analysis/ai_widgets:form');
-    // Keep the server-rendered information until its enhanced replacement is ready.
-    var info = root.querySelector('[data-region="ai-info"]');
-    var enhanced = document.createElement('div');
-
-    return renderInfoBox('report_ai_analysis', userId, enhanced, ['singleprompt'])
-        .then(function() {
-            info.replaceChildren(enhanced);
-            return renderUserQuota(root.querySelector('[data-region="ai-quota"]'), ['singleprompt']);
-        })
-        .then(function() {
-            pending.resolve();
-        }, function() {
-            return Promise.resolve(displayException(new Error(errorMessage))).then(function() {
-                pending.resolve();
-            });
-        });
+    const pending = new Pending('report_ai_analysis/ai_widgets:form');
+    try {
+        // Keep the server-rendered information until its enhanced replacement is ready.
+        const info = root.querySelector('[data-region="ai-info"]');
+        const enhanced = document.createElement('div');
+        await renderInfoBox('report_ai_analysis', userId, enhanced, ['singleprompt']);
+        info.replaceChildren(enhanced);
+        await renderUserQuota(root.querySelector('[data-region="ai-quota"]'), ['singleprompt']);
+    } catch (error) {
+        await displayException(error instanceof Error ? error : new Error(errorMessage));
+    } finally {
+        pending.resolve();
+    }
 };
 
 /**
@@ -77,23 +73,21 @@ export const initForm = function(selector, userId, errorMessage) {
  * @param {string} errorMessage Localized generic error
  * @returns {Promise<void>}
  */
-export const initWarning = function(selector, errorMessage) {
-    var target = document.querySelector(selector);
+export const initWarning = async(selector, errorMessage) => {
+    const target = document.querySelector(selector);
     if (!target) {
-        return Promise.resolve();
+        return;
     }
-    var pending = new Pending('report_ai_analysis/ai_widgets:warning');
-    var enhanced = document.createElement('div');
-
-    return renderWarningBox(enhanced)
-        .then(function() {
-            if (enhanced.hasChildNodes()) {
-                target.replaceChildren(enhanced);
-            }
-            pending.resolve();
-        }, function() {
-            return Promise.resolve(displayException(new Error(errorMessage))).then(function() {
-                pending.resolve();
-            });
-        });
+    const pending = new Pending('report_ai_analysis/ai_widgets:warning');
+    try {
+        const enhanced = document.createElement('div');
+        await renderWarningBox(enhanced);
+        if (enhanced.hasChildNodes()) {
+            target.replaceChildren(enhanced);
+        }
+    } catch (error) {
+        await displayException(error instanceof Error ? error : new Error(errorMessage));
+    } finally {
+        pending.resolve();
+    }
 };
