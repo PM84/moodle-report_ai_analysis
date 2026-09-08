@@ -4,6 +4,14 @@ No terminal commands, test suites or builds were run for this documentation/Beha
 
 ## Environment and backend fixtures
 
+### Reproducible AMD builds
+
+Use the Node version required by Moodle's `.nvmrc` and install Moodle's dependencies with `npm ci` in the Moodle root before building this plugin. Keep the upstream `npm-shrinkwrap.json`: matching Node versions alone does not guarantee matching Babel, Rollup and Terser output. Build with `npx grunt amd --max-lint-warnings=0` in this plugin's `amd` directory and commit both JavaScript files and source maps. Do not use `--force` to validate a build.
+
+The CI stale-file check compares generated file contents, not timestamps. On 2026-09-08, local Terser 5.51.2/Rollup 2.80.0 produced different output from the Moodle 5.0–5.2 locked versions (Terser 5.11.0/Rollup 2.67.3). Restoring the locked dependencies produced byte-identical artifacts in the local Moodle 5.2 and isolated upstream Moodle 5.0 builds.
+
+For Behat row actions, avoid ambiguous partial link text: `Delete` also matches a report title such as `Report to Delete`. Select the delete action URL within the row and assert the confirmation before pressing Continue.
+
 Use Moodle's isolated Behat installation with a JavaScript-capable driver, the plugin schema upgraded, and `local_ai_manager`, `aipurpose_singleprompt`, `aipurpose_chat`, `aitool_chatgpt`, `mod_forum` and `block_ai_chat` installed. Use the project's normal Behat workflow and the `@report_ai_analysis` tag. Behat covers end-to-end browser journeys only; the fine-grained authorisation, lifecycle, budget and privacy permutations are verified faster in the PHPUnit scenarios. Date-selector scenarios explicitly use UTC.
 
 Every report UI background now uses **the AI analysis backend is configured**. This does not inject an availability response or disable consent checks. The fixture:
